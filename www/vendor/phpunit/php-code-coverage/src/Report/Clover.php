@@ -50,8 +50,7 @@ final class Clover
             /* @var File $item */
 
             $xmlFile = $xmlDocument->createElement('file');
-            $xmlFile->setAttribute('path', $item->getPath());
-            $xmlFile->setAttribute('name', $item->getName());
+            $xmlFile->setAttribute('name', $item->getPath());
 
             $classes      = $item->getClassesAndTraits();
             $coverageData = $item->getCoverageData();
@@ -165,7 +164,6 @@ final class Clover
 
                 if (isset($data['name'])) {
                     $xmlLine->setAttribute('name', $data['name']);
-                    $xmlLine->setAttribute('signature', $data['name']);
                 }
 
                 if (isset($data['visibility'])) {
