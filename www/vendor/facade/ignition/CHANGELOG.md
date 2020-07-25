@@ -2,6 +2,61 @@
 
 All notable changes to `ignition` will be documented in this file
 
+## 2.0.7 - 2020-06-07
+
+- Fix `DefaultDbNameSolutionProvider` (#277)
+
+## 2.0.6 - 2020-06-01
+
+- remove ability to fix variable names
+
+## 2.0.5 - 2020-05-29
+
+- blacklist certain variable names when fixing variable names
+
+## 2.0.4 - 2020-05-18
+
+- handle exceptions in case the request doesn't have a user (#274)
+
+## 2.0.3 - 2020-04-07
+
+- support Laravel 8
+
+## 2.0.2 - 2020-03-18
+
+- fix execute solution route not defined (#265)
+
+## 2.0.0 - 2020-02-02
+
+- adds support for Laravel 7
+- drop support for Laravel 6 and below
+- git information won't be collected by default anymore (if you need this set `collect_git_information` to `true` in the `flare` config file)
+- `MissingPackageSolutionProvider` was added to the `ignored_solution_providers` because it potentially could be slow.
+
+## 1.16.0 - 2020-01-21
+
+- add named routes (#197)
+
+## 1.15.0 - 2020-01-21
+
+- add exception to the bottom of the html (#230)
+
+## 1.14.0 - 2020-01-06
+
+- add indicator that solution is running (#212)
+
+## 1.13.1 - 2020-01-02
+
+-   Remove external reference for icons (#134)
+
+## 1.13.0 - 2019-11-27
+
+- Allow custom grouping types
+
+## 1.12.1 - 2019-11-25
+
+- Detect multibyte position offsets when adding linenumbers to the blade view - Fixes #193
+
 ## 1.12.0 - 2019-11-14
 
 - Add exception to html (#206)
@@ -11,37 +66,37 @@ All notable changes to `ignition` will be documented in this file
 
 ## 1.11.2 - 2019-10-13
 
-- simplify default Laravel installation (#198)
+-   simplify default Laravel installation (#198)
 
 ## 1.11.1 - 2019-10-08
 
-- add conditional line number (#182)
+-   add conditional line number (#182)
 
 ## 1.11.0 - 2019-10-08
 
-- add better error messages for missing validation rules (#125)
+-   add better error messages for missing validation rules (#125)
 
 ## 1.10.0 - 2019-10-07
 
-- Add `ignition:make-solution` command
-- Add default for query binding option (Fixes #183)
+-   Add `ignition:make-solution` command
+-   Add default for query binding option (Fixes #183)
 
 ## 1.9.2 - 2019-10-04
 
-- Fix service provider registration (Fixes #177)
+-   Fix service provider registration (Fixes #177)
 
 ## 1.9.1 - 2019-10-01
 
-- collapse vendor frames on windows fix (#176)
+-   collapse vendor frames on windows fix (#176)
 
 ## 1.9.0 - 2019-09-27
 
--  add ability to send logs to flare
--  add `ddd` function
+-   add ability to send logs to flare
+-   add `ddd` function
 
 ## 1.8.4 - 2019-09-27
 
--  Resolve configuration from the injected app instead of the helper ([#168](https://github.com/facade/ignition/pull/168))
+-   Resolve configuration from the injected app instead of the helper ([#168](https://github.com/facade/ignition/pull/168))
 
 ## 1.8.3 - 2019-09-25
 

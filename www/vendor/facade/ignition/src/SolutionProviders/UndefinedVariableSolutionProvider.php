@@ -2,12 +2,12 @@
 
 namespace Facade\Ignition\SolutionProviders;
 
-use Throwable;
-use Facade\IgnitionContracts\BaseSolution;
 use Facade\Ignition\Exceptions\ViewException;
-use Facade\IgnitionContracts\HasSolutionsForThrowable;
 use Facade\Ignition\Solutions\MakeViewVariableOptionalSolution;
 use Facade\Ignition\Solutions\SuggestCorrectVariableNameSolution;
+use Facade\IgnitionContracts\BaseSolution;
+use Facade\IgnitionContracts\HasSolutionsForThrowable;
+use Throwable;
 
 class UndefinedVariableSolutionProvider implements HasSolutionsForThrowable
 {
@@ -54,7 +54,7 @@ class UndefinedVariableSolutionProvider implements HasSolutionsForThrowable
             return $solution->isRunnable()
                 ? $solution
                 : BaseSolution::create($solution->getSolutionTitle())
-                    ->setSolutionDescription($solution->getSolutionActionDescription());
+                    ->setSolutionDescription($solution->getSolutionDescription());
         })->toArray();
     }
 
@@ -65,7 +65,7 @@ class UndefinedVariableSolutionProvider implements HasSolutionsForThrowable
         return $optionalSolution->isRunnable()
             ? $optionalSolution
             : BaseSolution::create($optionalSolution->getSolutionTitle())
-                ->setSolutionDescription($optionalSolution->getSolutionActionDescription());
+                ->setSolutionDescription($optionalSolution->getSolutionDescription());
     }
 
     protected function getNameAndView(Throwable $throwable): ?array

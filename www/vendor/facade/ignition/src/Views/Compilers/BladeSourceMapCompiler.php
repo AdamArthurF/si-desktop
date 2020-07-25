@@ -11,7 +11,7 @@ class BladeSourceMapCompiler extends BladeCompiler
         $map = $this->compileString(file_get_contents($filename));
         $map = explode("\n", $map);
 
-        $line = $map[$exceptionLineNumber - $this->getExceptionLineOffset()] ?? $exceptionLineNumber;
+        $line = $map[$exceptionLineNumber - 1] ?? $exceptionLineNumber;
         $pattern = '/\|---LINE:([0-9]+)---\|/m';
 
         if (preg_match($pattern, $line, $matches)) {
@@ -21,30 +21,19 @@ class BladeSourceMapCompiler extends BladeCompiler
         return $exceptionLineNumber;
     }
 
-    protected function getExceptionLineOffset(): int
-    {
-        /*
-         * Laravel 5.8.0- 5.8.9 added the view name as a comment in the compiled view on a new line.
-         * That's why the offset to detect the correct line number must be 2 instead of 1.
-         */
-        if (version_compare(app()->version(), '5.8.0', '>=') &&
-            version_compare(app()->version(), '5.8.9', '<=')
-        ) {
-            return 2;
-        }
-
-        return 1;
-    }
-
     public function compileString($value)
     {
-        $value = $this->addEchoLineNumbers($value);
+        try {
+            $value = $this->addEchoLineNumbers($value);
 
-        $value = $this->addStatementLineNumbers($value);
+            $value = $this->addStatementLineNumbers($value);
 
-        $value = parent::compileString($value);
+            $value = parent::compileString($value);
 
-        return $this->trimEmptyLines($value);
+            return $this->trimEmptyLines($value);
+        } catch (\Exception $e) {
+            return $value;
+        }
     }
 
     protected function addEchoLineNumbers(string $value)
@@ -53,7 +42,9 @@ class BladeSourceMapCompiler extends BladeCompiler
 
         if (preg_match_all($pattern, $value, $matches, PREG_OFFSET_CAPTURE)) {
             foreach (array_reverse($matches[0]) as $match) {
-                $value = $this->insertLineNumberAtPosition($match[1], $value);
+                $position = mb_strlen(substr($value, 0, $match[1]));
+
+                $value = $this->insertLineNumberAtPosition($position, $value);
             }
         }
 
@@ -71,7 +62,9 @@ class BladeSourceMapCompiler extends BladeCompiler
 
         if ($shouldInsertLineNumbers) {
             foreach (array_reverse($matches[0]) as $match) {
-                $value = $this->insertLineNumberAtPosition($match[1], $value);
+                $position = mb_strlen(substr($value, 0, $match[1]));
+
+                $value = $this->insertLineNumberAtPosition($position, $value);
             }
         }
 

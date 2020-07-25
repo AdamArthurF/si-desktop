@@ -3,15 +3,16 @@
 namespace Facade\Ignition\Views\Engines;
 
 use Exception;
-use ReflectionProperty;
+use Facade\Ignition\Exceptions\ViewException;
+use Facade\Ignition\Exceptions\ViewExceptionWithSolution;
+use Facade\Ignition\Views\Compilers\BladeSourceMapCompiler;
+use Facade\Ignition\Views\Concerns\CollectsViewExceptions;
+use Facade\IgnitionContracts\ProvidesSolution;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Filesystem\Filesystem;
-use Facade\Ignition\Exceptions\ViewException;
-use Facade\IgnitionContracts\ProvidesSolution;
-use Facade\Ignition\Exceptions\ViewExceptionWithSolution;
-use Facade\Ignition\Views\Concerns\CollectsViewExceptions;
-use Facade\Ignition\Views\Compilers\BladeSourceMapCompiler;
+use ReflectionProperty;
+use Throwable;
 
 class CompilerEngine extends \Illuminate\View\Engines\CompilerEngine
 {
@@ -46,7 +47,7 @@ class CompilerEngine extends \Illuminate\View\Engines\CompilerEngine
      *
      * @throws \Exception
      */
-    protected function handleViewException(Exception $baseException, $obLevel)
+    protected function handleViewException(Throwable $baseException, $obLevel)
     {
         while (ob_get_level() > $obLevel) {
             ob_end_clean();
@@ -83,7 +84,7 @@ class CompilerEngine extends \Illuminate\View\Engines\CompilerEngine
         throw $exception;
     }
 
-    protected function getBladeLineNumber(string $compiledPath, int $exceptionLineNumber):int
+    protected function getBladeLineNumber(string $compiledPath, int $exceptionLineNumber): int
     {
         $viewPath = $this->getCompiledViewName($compiledPath);
 
